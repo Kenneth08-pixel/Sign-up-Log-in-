@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <form onsubmit="signup(event)">
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" id="signup_username" placeholder="Username" required></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" id="signup_password" placeholder="Password" required></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Sign Up</button></td>
+            </tr>
+        </table>
+    </form>
+    <form onsubmit="login(event)">
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" id="login_username" placeholder="Username" required></td>
+            </tr>
+            <tr>
+                <td>Password:</td>
+                <td><input type="password" id="login_password" placeholder="Password" required></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Log In</button></td>
+            </tr>
+        </table>
+    </form>
+
+    <script>
+        function signup(event) {
+            event.preventDefault(); // Prevent page reload            
+            const username = document.getElementById("signup_username").value;
+            const password = document.getElementById("signup_password").value;
+            if (username && password) {
+                // Retrieve existing users from localStorage
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                // Check if username already exists
+                const userExists = users.some(user => user.username === username);
+                if (userExists) {
+                    alert("Username already exists. Please choose another one.");
+                    return;
+                }
+                // Add new user to the list
+                users.push({ username, password });
+                localStorage.setItem('users', JSON.stringify(users));
+                alert("Nnooyyy Maaahawww");                document.getElementById("signup_username").value = "";                document.getElementById("signup_password").value = "";
+            } else {
+                alert("Please fill out all fields.");
+            }
+        }
+        function login(event) {
+            event.preventDefault(); // Prevent page reload            
+            const username = document.getElementById("login_username").value;
+            const password = document.getElementById("login_password").value;
+            if (username && password) {
+                // Retrieve existing users from localStorage
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                // Check if the entered username and password match
+                const user = users.find(user => user.username === username && user.password === password);
+                if (user) {
+                    alert("Maahawww Noooyyy Wwaahhh, " + username);
+                } else {
+                    alert("Invalid Username or Password.");
+                }                document.getElementById("login_username").value = "";                document.getElementById("login_password").value = "";
+            } else {
+                alert("Please fill out all fields.");
+            }
+        }
+    </script>
+</body>
+</html>
